@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+
+
+
+{% block title %}frontpage  {% endblock %}
+
+
+{% block content %}
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <section class="section">
+                <div class="column">
+                    <div class="column is-8 is-offset-2">
+                        <h1>
+                            Query : {{query}}
+                        </h1>
+                        {% for post in posts%}
+                        <div class="content box is-medium">
+                                <a href="{% url 'category' post.category.slug  %}">
+                            
+                                    {% if post.image %}
+                                    <figure class="image mb-6">
+                                        <img src="{{ post.image.url }} " alt="">
+                                    </figure>
+                                    {% endif %}
+                               
+                                    <h2 class="subtitle is-4">
+        
+                                        {{post.created_at | date:'M-d-Y' }}
+                                    </h2>
+                                    <h2 class="title">
+                                        {{post.title}}
+                                    </h2>
+                                    <p>
+                                        {{post.intro}}
+                                    </p>
+                                    <p><small>Category: {{ post.category }}</small></p>
+                                <p>
+                        
+
+                                </a>
+                            </div>
+                           
+                            {% endfor %}  
+
+                    </div>
+    
+    
+                </div>
+    
+            </section>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %} 

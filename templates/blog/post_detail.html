@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+
+
+
+
+{% block content %}
+<section class="hero">
+    <div class="hero-body">
+        <div clss="container">
+            <section class="section">
+                <div class="column">
+                    <div class="column is-8 is-offset-2">
+                        <!-- post details -->
+                        <div class="content is-medium">
+
+                            {% if post.image %}
+                            <figure class="image mb-6">
+                                <img src="{{ post.image.url }} " alt="">
+                            </figure>
+                            {% endif %}
+                            <h2 class="subtitle is-4">
+
+                                {{post.created_at| date:'M-d-Y' }}
+                            </h2>
+                            <h2 class="title">
+                                {{post.title}}
+                            </h2>
+                            <p>
+                                {{post.intro}}
+                            </p>
+                            <p>
+                                {{post.body}}  
+                            </p>
+                            <p><small>Category: <a href="{% url 'category' post.category.slug %}">
+                                 {{ post.category }} </a>
+                            </small></p>
+
+                        </div>
+
+
+                        <!-- comment form -->
+                        <!-- {{ form.as_p }} -->
+                        <form action="" method="post">
+                            {%  csrf_token %}
+                            <div class="field">
+                                <label for="{{ form.name.id_for_label }}">Name</label>
+                                <div class="control">
+                                    {{form.name}}
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="{{ form.email.id_for_label }}">email</label>
+                                <div class="control">
+                                    {{form.email}}
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="{{ form.body.id_for_label }}">add new comment</label>
+                                <div class="control">
+                                    {{form.body}}
+                                </div>
+                            </div>
+                            <div>
+                                <button class="button is-success mt-4">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+
+
+
+
+
+                        <!-- list of comments  -->
+                        {% for comment in post.comments.all%}
+
+                        <article class="media box mt-6">
+                            <div class="media-content">
+                                <strong>
+                                    {{ comment.name }}
+                                </strong>
+                                <small>
+                                    {{ comment.created_at |timesince }} ago
+                                </small>
+                                <div>
+                                    {{ comment.body }}
+                                </div>
+                            </div>
+                        </article>
+
+                        {% empty %}
+
+                        <article class="media box mt-6">
+                            <p>
+                                There is no comments
+                            </p>
+                        </article>
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
